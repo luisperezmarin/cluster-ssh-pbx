@@ -1,0 +1,81 @@
+#!/bin/bash
+### BEGIN INIT INFO
+# Provides:          sync
+# Required-Start:    $remote_fs $syslog $all
+# Required-Stop:
+# Default-Start:     3 4 5
+# Default-Stop:      1
+# Short-Description: Run /usr/local/sbin/itm-replicate in screen
+### END INIT INFO
+
+
+script=/usr/local/sbin/itm-replicate
+
+function start(){
+    status
+    if [ $? -eq 1 ]
+    then
+        /usr/bin/screen -dmS replicate $script
+    else
+        echo "Running PID $PID"
+    fi
+}
+
+function stop(){
+    status
+    if [ $? -eq 1 ]
+    then
+        return 1
+    else
+        kill -9 $PID
+        /usr/bin/screen -wipe &> /dev/null
+    fi
+}
+
+function restart(){
+    stop
+    start
+}
+
+function status(){
+    PID=$(screen -ls|grep -e replicate|awk -F"." '{print $1}')
+    if [[ -z ${PID} ]]
+    then
+        return 1
+    else
+        return 0
+    fi
+}
+
+case $1 in
+    start)
+        start
+    ;;
+    stop)
+        stop
+        if [ $? -eq 1 ]
+        then
+            echo "Not Running"
+        else
+            exit 0
+        fi
+    ;;
+    save)
+        restart
+    ;;
+    restart)
+        restart
+    ;;
+    status)
+        status
+        if [ $? -eq 1 ]
+        then
+            echo "Not Running"
+        else
+            echo "Running PID $PID"
+        fi
+    ;;
+    *)
+        echo "Usage: $0 (start|stop|save|restart|status)"
+esac
+exit 0
