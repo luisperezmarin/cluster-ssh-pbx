@@ -2,9 +2,9 @@
 ### BEGIN INIT INFO
 # Provides:          sync
 # Required-Start:    $remote_fs $syslog $all
-# Required-Stop:
-# Default-Start:     3 4 5
-# Default-Stop:      1
+# Required-Stop:     
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
 # Short-Description: Run /usr/local/sbin/itm-replicate in screen
 ### END INIT INFO
 
