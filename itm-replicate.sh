@@ -2,7 +2,7 @@
 
 source /etc/pbx-ha.conf
 
-#intervalo=3
+intervalo=3
 #minutos=2
 max=$[ $minutos * 60 / $intervalo ]
 contador=0
