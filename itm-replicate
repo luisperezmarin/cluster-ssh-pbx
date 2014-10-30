@@ -74,6 +74,7 @@ then
     fi
 else
     echo "soy slave"
+    contador=0
 fi
 contador=$[ $contador + 1 ]
 sleep 3
