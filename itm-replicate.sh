@@ -34,7 +34,7 @@ function slavealive() {
 
 function verifyvip() {
 IP=$(hostname -I |grep -o ${VIP})
-if [[ -z ${IP} ]]
+if [[ -z "${IP}" ]]
     then
         return 1
     else
