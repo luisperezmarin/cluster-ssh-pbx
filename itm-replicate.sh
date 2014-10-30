@@ -33,8 +33,8 @@ function slavealive() {
 }
 
 function verifyvip() {
-IP=$(ip addr show eth0|grep inet|grep 192|awk -F" " '{print $2}'|awk -F"/" '{print $1}'|grep 14)
-if [[ -z "${IP}" ]]
+IP=$(hostname -I |grep -o ${VIP})
+if [[ -z ${IP} ]]
     then
         return 1
     else
