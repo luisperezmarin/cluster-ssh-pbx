@@ -3,20 +3,18 @@
 source /etc/pbx-ha.conf
 
 intervalo=3
-#minutos=2
 max=$[ $minutos * 60 / $intervalo ]
 contador=0
 
-function command(){
-    #ssh -p 8756 -i /SSH/asterisk/.ssh/id_rsa asterisk@pbx02-cr whoami
+function exesync(){
     echo "ejecutando sincronizacion"
-    ssh -p 8756 -i /SSH/asterisk/.ssh/id_rsa asterisk@pbx02-cr /usr/local/sbin/sync.sh
+    ssh -p 8756 -i /SSH/asterisk/.ssh/id_rsa "${user}@${PBX02}" /usr/local/sbin/sync.sh
 }
 
 function slavealive() {
-    if [ $HOSTNAME == "pbx01-cr" ]
+    if [ $HOSTNAME == "${PBX01}" ]
     then
-        ping -c 2 172.172.172.2 > /dev/null 2>&1
+        ping -c 2 ${IP1} > /dev/null 2>&1
         if [ $? == 0 ]
         then
             return 0
@@ -24,7 +22,7 @@ function slavealive() {
             return 1
         fi
     else
-        ping -c 2 172.172.172.1 > /dev/null 2>&1
+        ping -c 2 ${IP2} > /dev/null 2>&1
         if [ $? == 0 ]
         then
             return 0
@@ -57,14 +55,14 @@ then
         echo "Faltan $restante segundos para sincronizar"
         if [ ${contador} == ${max} ]
         then
-            command
+            exesync
             contador=0
             restante=0
         else
             if [ "$FLAG" == "UNREACHABLE" ]
             then
                 echo "SLAVE JUST COME UP"
-                command
+                exesync
                 contador=0
                 restante=0
             fi
