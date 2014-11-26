@@ -8,7 +8,11 @@ contador=0
 
 function exesync(){
     echo "ejecutando sincronizacion"
-    ssh -p 8756 -i /SSH/asterisk/.ssh/id_rsa "${user}@${PBX02}" /usr/local/sbin/sync.sh
+    if [ $HOSTNAME == "${PBX01}" ]
+        ssh -p 8756 -i /SSH/asterisk/.ssh/id_rsa "${user}@${PBX02}" /usr/local/sbin/sync.sh
+    else
+        ssh -p 8756 -i /SSH/asterisk/.ssh/id_rsa "${user}@${PBX01}" /usr/local/sbin/sync.sh
+    fi
 }
 
 function slavealive() {
@@ -69,7 +73,7 @@ then
             FLAG="REACHABLE"
         fi
     else
-           echo "slave inalcanzable" 
+           echo "slave UNREACHABLE" 
            FLAG="UNREACHABLE"
     fi
 else
