@@ -15,7 +15,7 @@ function start(){
     status
     if [ $? -eq 1 ]
     then
-        /usr/bin/screen -dmS replicate $script
+        /usr/bin/screen -L -c /etc/pbx-ha-screen.conf -dmS replicate $script
     else
         echo "Running PID $PID"
     fi
