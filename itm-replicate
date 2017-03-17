@@ -19,7 +19,7 @@ function exesync(){
 function slavealive() {
     if [ $HOSTNAME == "${PBX01}" ]
     then
-        ping -c 2 ${IP1} > /dev/null 2>&1
+        ping -c 2 ${IP2} > /dev/null 2>&1
         if [ $? == 0 ]
         then
             return 0
@@ -27,7 +27,7 @@ function slavealive() {
             return 1
         fi
     else
-        ping -c 2 ${IP2} > /dev/null 2>&1
+        ping -c 2 ${IP1} > /dev/null 2>&1
         if [ $? == 0 ]
         then
             return 0
