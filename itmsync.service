@@ -1,0 +1,12 @@
+[Unit]
+Description=Sync Service ITM PBX HA
+After=syslog.target network.target
+
+[Service]
+Type=simple
+PIDFile=/var/run/itmsync.pid
+ExecStart=/usr/local/sbin/itm-replicate
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
