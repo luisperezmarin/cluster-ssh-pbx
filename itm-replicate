@@ -10,9 +10,9 @@ function exesync(){
     echo "ejecutando sincronizacion"
     if [ $HOSTNAME == "${PBX01}" ]
     then
-        ssh -p 8756 -i /SSH/asterisk/.ssh/id_rsa "${user}@${PBX02}" /usr/local/sbin/sync.sh
+        ssh -p 8756 -i ${KEYPATH}/.ssh/id_rsa "${user}@${PBX02}" /usr/local/sbin/sync.sh
     else
-        ssh -p 8756 -i /SSH/asterisk/.ssh/id_rsa "${user}@${PBX01}" /usr/local/sbin/sync.sh
+        ssh -p 8756 -i ${KEYPATH}/.ssh/id_rsa "${user}@${PBX01}" /usr/local/sbin/sync.sh
     fi
 }
 
